@@ -3,19 +3,19 @@ from pathlib import Path
 
 def get_config():
     return {
-        "batch_size": 8,
-        "num_epochs": 20,
+        "batch_size": 16,
+        "num_epochs": 50,
         "lr": 10**-4,
         "seq_len": 350,
         "d_model": 512,
         "datasource": 'opus_books',
-        "lang_src": "en",
-        "lang_tgt": "es",
-        "model_folder": "weights/weights_en_es",
-        "model_basename": "tmodel_en_es_",
-        "preload": "latest",
-        "tokenizer_file": "tokenizer_{0}.json",
-        "experiment_name": "runs/tmodel_en_es"
+        "lang_src": "it",
+        "lang_tgt": "en",
+        "model_folder": "/transformer/weights/weights_it_en",
+        "model_basename": "tmodel_it_en_",
+        "preload": None,
+        "tokenizer_file": "/transformer/vocab/vocab_it_en/tokenizer_{0}.json",
+        "experiment_name": "runs/tmodel_it_en"
     }
 
 
