@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        // Function to show popup message
+        function showPopup(message) {
+            alert(message); // Display error message as a popup
+        }
+
+        // Function to handle speech recognition and populate textarea
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US'; // Set language for speech recognition
+
+        function startVoiceInput() {
+            recognition.start(); // Start voice recognition
+        }
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript; // Get the transcribed text
+            document.querySelector('[name="sentence"]').value = transcript; // Insert into textarea
+        };
+
+        recognition.onerror = function(event) {
+            showPopup("Error in speech recognition: " + event.error);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Language Translator</h1>
+        <div class="note">
+            <p>Note: This translator currently only supports English to French and English to Italian translations. Due to computational constraints, translation quality may be limited. The model's performance could be improved through extended training periods using more powerful GPUs and larger datasets. This is a research prototype and not intended for production use.</p>
+        </div>
+        <div class="translator-container">
+            <form id="translate-form" method="POST">
+                <div class="translation-boxes">
+                    <!-- Source Box -->
+                    <div class="translation-box">
+                        <div class="language-bar">
+                            <select name="src_lang" id="src_lang" disabled>
+                                <option value="en" selected>English</option>
+                            </select>
+                        </div>
+                        <textarea 
+                            name="sentence" 
+                            class="translation-input"
+                            placeholder="Enter text"
+                            required>{{ sentence }}</textarea>
+                        <!-- Microphone Button for Voice Input -->
+                        <button type="button" onclick="startVoiceInput()" class="microphone-btn">
+                            🎤
+                        </button>
+                    </div>
+
+                    <!-- Target Box -->
+                    <div class="translation-box">
+                        <div class="language-bar">
+                            <select name="language" id="tgt_lang">
+                                <option value="fr" {% if tgt_lang == 'fr' %}selected{% endif %}>French</option>
+                                <option value="it" {% if tgt_lang == 'it' %}selected{% endif %}>Italian</option>
+                            </select>
+                        </div>
+                        <textarea 
+                            class="translation-output" 
+                            readonly 
+                            placeholder="Translation">{{ translated_sentence }}</textarea>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="translate-button">Translate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Handle form submission and display the translation
+        document.getElementById("translate-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const form = new FormData(e.target);
+
+            const response = await fetch("/", {
+                method: "POST",
+                body: form
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                showPopup(data.error);
+            } else {
+                const outputBox = document.querySelector(".translation-output");
+                outputBox.value = data.translated_sentence;
+            }
+        });
+    </script>
+</body>
+</html>
