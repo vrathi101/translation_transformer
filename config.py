@@ -6,16 +6,16 @@ def get_config():
         "batch_size": 16,
         "num_epochs": 50,
         "lr": 10**-4,
-        "seq_len": 350,
+        "seq_len": 500,  # 550 for en to fr
         "d_model": 512,
         "datasource": 'opus_books',
-        "lang_src": "it",
-        "lang_tgt": "en",
-        "model_folder": "/transformer/weights/weights_it_en",
-        "model_basename": "tmodel_it_en_",
-        "preload": None,
-        "tokenizer_file": "/transformer/vocab/vocab_it_en/tokenizer_{0}.json",
-        "experiment_name": "runs/tmodel_it_en"
+        "lang_src": "en",
+        "lang_tgt": "it",
+        "model_folder": "weights/weights_en_it",
+        "model_basename": "tmodel_en_it_",
+        "preload": "latest",
+        "tokenizer_file": "tokenizers/tokenizer_{0}_{1}.json",
+        "experiment_name": "runs/tmodel_en_it"
     }
 
 
@@ -34,4 +34,3 @@ def latest_weights_file_path(config):
         return None
     weights_files.sort()
     return str(weights_files[-1])
-
