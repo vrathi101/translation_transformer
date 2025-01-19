@@ -10,6 +10,7 @@ Additionally, it includes a Flask-based web interface for interacting with the t
 - **Custom Transformer Implementation**: Built from scratch, including self-attention and cross-attention mechanisms.
 - **Flask Interface**: An intuitive web interface allowing users to input text or speak to receive instant translations.
 - **Multilingual Support**: Pre-trained models for English ↔ Italian and English ↔ French translation.
+- **Dataset**: Trained using the [Opus Books](https://huggingface.co/datasets/Helsinki-NLP/opus_books) dataset, a multilingual corpus of literary texts.
 
 ## Model Weights
 Due to storage constraints, the trained model weights are not included in this repository. You can access them on Hugging Face:  
