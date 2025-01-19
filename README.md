@@ -1,8 +1,8 @@
 # Multilingual Transformer Translation System
 
 This repository contains a PyTorch-based implementation of a multilingual transformer model inspired by the **"Attention is All You Need"** paper. The model supports translation between:  
-- **English ↔ Italian**  
-- **English ↔ French**  
+- **English -> Italian**  
+- **English -> French**  
 
 Additionally, it includes a Flask-based web interface for interacting with the trained models, featuring both text and voice input capabilities for seamless translation.
 
